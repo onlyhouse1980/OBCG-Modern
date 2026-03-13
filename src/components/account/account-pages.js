@@ -4,6 +4,15 @@ import Link from 'next/link';
 import { useEffect, useId, useMemo, useState } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 
 import {
   ActionLink,
@@ -99,6 +108,44 @@ function toneClass(value, { positiveIsGood = false } = {}) {
   }
 
   return value > 0 ? styles.toneDanger : styles.tonePositive;
+}
+
+function formatChartLabelMMDDYYYY(label) {
+  const str = String(label ?? '');
+
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(str)) {
+    return str;
+  }
+
+  const monthMap = {
+    jan: '01',
+    feb: '02',
+    mar: '03',
+    apr: '04',
+    may: '05',
+    jun: '06',
+    jul: '07',
+    aug: '08',
+    sep: '09',
+    oct: '10',
+    nov: '11',
+    dec: '12',
+  };
+
+  const parts = str.split(' ');
+  if (parts.length < 3) {
+    return str;
+  }
+
+  const month = monthMap[parts[0].slice(0, 3).toLowerCase()];
+  const day = (parts[1] || '').replace(',', '').padStart(2, '0');
+  const year = parts[2];
+
+  if (!month || !day || !year) {
+    return str;
+  }
+
+  return `${month}/${day}/${year}`;
 }
 
 function InfoTable({ title, description, columns, rows }) {
@@ -907,6 +954,17 @@ export function BillingLookupPage() {
   }, [selected]);
 
   const summary = summarizeUsage(recentPeriods);
+  const chartData = useMemo(
+    () =>
+      recentPeriods
+        .slice()
+        .reverse()
+        .map((period) => ({
+          date: period.toLabel,
+          usage: period.usage,
+        })),
+    [recentPeriods],
+  );
 
   return (
     <Page className={styles.page}>
@@ -1025,6 +1083,41 @@ export function BillingLookupPage() {
             columns={['Billing period', 'Usage', 'Over 6,000', 'Estimated charge']}
             rows={buildBillingRows(recentPeriods)}
           />
+
+          {chartData.length ? (
+            <article className={styles.chartCard}>
+              <div className={styles.tableHeader}>
+                <div>
+                  <h3 className={styles.tableHeaderTitle}>Usage trend</h3>
+                  <p className={styles.tableHeaderText}>
+                    Usage by billing period for the selected account.
+                  </p>
+                </div>
+              </div>
+              <div className={styles.chartArea}>
+                <ResponsiveContainer width="100%" height={320}>
+                  <LineChart data={chartData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(16, 79, 104, 0.12)" />
+                    <XAxis
+                      dataKey="date"
+                      tickFormatter={formatChartLabelMMDDYYYY}
+                      stroke="#4a6174"
+                    />
+                    <YAxis stroke="#4a6174" />
+                    <Tooltip labelFormatter={formatChartLabelMMDDYYYY} />
+                    <Line
+                      type="monotone"
+                      dataKey="usage"
+                      stroke="#1b82a7"
+                      strokeWidth={3}
+                      dot={{ fill: '#1b82a7', r: 4 }}
+                      activeDot={{ r: 6 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </article>
+          ) : null}
         </>
       ) : null}
     </Page>
@@ -1107,9 +1200,6 @@ export function MeterUsagePage({ meterSerialNum }) {
           <>
             <ActionLink href="/howtoreadmeter.pdf" external>
               How to read your meter
-            </ActionLink>
-            <ActionLink href="/billing" secondary>
-              Billing lookup
             </ActionLink>
           </>
         }
@@ -1237,7 +1327,7 @@ export function HistoryPage({ fetchUrl, mode, title, description, eyebrow }) {
         <EmptyState
           title="History unavailable"
           description={error || 'We could not find that account.'}
-          action={<ActionLink href="/billing">Return to billing lookup</ActionLink>}
+          action={<ActionLink href="/register">Open usage lookup</ActionLink>}
         />
       </Page>
     );
@@ -1260,10 +1350,7 @@ export function HistoryPage({ fetchUrl, mode, title, description, eyebrow }) {
         description={description}
         actions={
           <>
-            <ActionLink href="/billing">Billing lookup</ActionLink>
-            <ActionLink href="/register" secondary>
-              Meter lookup
-            </ActionLink>
+            <ActionLink href="/register">Meter lookup</ActionLink>
           </>
         }
         stats={heroStats}

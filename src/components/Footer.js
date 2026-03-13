@@ -5,7 +5,6 @@ import styles from '../styles/WelcomePage.module.css';
 
 const footerLinks = [
   { href: '/register', label: 'Usage Lookup' },
-  { href: '/billing', label: 'Billing' },
   { href: '/pdfs/consumer2025', label: 'Water Reports' },
   { href: '/contact', label: 'Contact' },
 ];

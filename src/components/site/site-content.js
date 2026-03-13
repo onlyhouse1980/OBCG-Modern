@@ -24,12 +24,6 @@ export const homeHighlights = [
     meta: ['Usage lookup', 'Meter-based'],
   },
   {
-    href: '/billing',
-    title: 'Billing lookup',
-    description: 'Search historical readings and estimate recent overage charges.',
-    meta: ['Billing history', 'Overage view'],
-  },
-  {
     href: '/pdfs/consumer2025',
     title: 'Consumer confidence reports',
     description: 'Open the latest annual water quality reports and supporting documentation.',

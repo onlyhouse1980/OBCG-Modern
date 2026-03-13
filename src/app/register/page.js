@@ -29,9 +29,6 @@ export default function Register() {
             <ActionLink href="/howtoreadmeter.pdf" external>
               How to read your meter
             </ActionLink>
-            <ActionLink href="/billing" secondary>
-              Search by last name
-            </ActionLink>
           </>
         }
         stats={[
