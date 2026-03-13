@@ -1,0 +1,10 @@
+{
+  "name": "OBCG Customer App",
+  "short_name": "OBCG",
+  "description": "Customer account app",
+  "start_url": "/login",
+  "display": "standalone",
+  "icons": [
+    // Your icon definitions here
+  ]
+}

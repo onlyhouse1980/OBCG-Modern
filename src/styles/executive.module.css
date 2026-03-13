@@ -1,0 +1,77 @@
+.divBlock {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 150px;
+}
+
+.body {
+    min-height: 100vh;
+}
+
+.Image5 {
+    border-radius: 10% 50%;
+    box-shadow: 1px 1px 3px 0 #000000;
+    margin: 10px;
+}
+
+.content {
+    border-radius: 10% 10% 5% 5%;
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 2px 2px 8px rgb(60, 60, 60);
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    padding: 1px;
+    background-image: url('/Images/FB-30-8x10-1280x1024-819x1024.webp');
+    background-size: 150%;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+.content a {
+    color: #0202de;
+    font-weight: 900;
+}
+
+.contentNameplate {
+    background-image: url(/Images/metal-plate.webp) ;
+
+    
+
+    background-size: cover;
+    box-shadow: 2px 2px 8px rgb(60, 60, 60);
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.content p {
+    padding-right: 20px;
+    padding-top: 20px;
+    font-weight: 700;
+}
+
+.clink {
+    font-size: smaller;
+    font: #020247!important;
+}
+
+.divBlock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media screen and (max-width: 1000px) {
+    .content {
+        max-width: -webkit-fill-available ;
+    }
+
+    .Image5 {
+        width: 300px;
+        width: 300px;
+    }
+}

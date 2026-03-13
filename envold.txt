@@ -1,0 +1,6 @@
+MONGODB_URI="mongodb+srv://obcg:Sunpoint210@cluster0.9nzkf5u.mongodb.net"
+NEXTAUTH_SECRET="eA7h7+LqfMgx0GVJcuoDC7gleRFazW6CZLBHHARdM/Y="
+RESEND_API_KEY=re_CjJ4j4wv_HMfyMskSGiv5sAoMotS5MjaS
+RESEND_FROM_EMAIL="noreply@obcg.org"
+YOUR_APP_DOMAIN="https://obcg.org/"
+JWT_SECRET="SViHpvSDAp6yxocWt0mGdCiMXj7kF0qtnN/Ux2J53Mk="

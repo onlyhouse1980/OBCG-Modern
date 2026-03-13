@@ -1,0 +1,288 @@
+.sheetPage {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.pageHeader {
+  display: grid;
+  gap: 0.55rem;
+  padding: clamp(1.25rem, 2.5vw, 1.85rem);
+  border-radius: 28px;
+  border: 1px solid rgba(16, 79, 104, 0.12);
+  background:
+    radial-gradient(circle at top right, rgba(120, 196, 218, 0.18), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(245, 251, 253, 0.98));
+  box-shadow: 0 20px 40px rgba(9, 30, 48, 0.08);
+}
+
+.pageTitle {
+  margin: 0;
+  color: #10273d;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.pageSubtext {
+  margin: 0;
+  color: #30495b;
+  max-width: 72ch;
+  line-height: 1.7;
+}
+
+.sheetShell {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 30px;
+  border: 1px solid rgba(14, 72, 97, 0.12);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 24px 52px rgba(8, 27, 43, 0.08);
+}
+
+.toolbar {
+  position: sticky;
+  top: 96px;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.05rem;
+  border-radius: 24px;
+  border: 1px solid rgba(16, 79, 104, 0.12);
+  background: rgba(244, 250, 252, 0.96);
+  backdrop-filter: blur(16px);
+}
+
+.toolbarGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.toolbarMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.metaPill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0.55rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(11, 88, 117, 0.08);
+  color: #17526a;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.errorPill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0.55rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(176, 38, 38, 0.09);
+  color: #962e2e;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.actionButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.72rem 1rem;
+  border-radius: 999px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  box-shadow: none;
+}
+
+.addButton {
+  background: linear-gradient(135deg, #0f7698, #1690b6);
+}
+
+.columnButton {
+  background: linear-gradient(135deg, #f1be68, #de9549);
+  color: #1b2836;
+}
+
+.saveButton {
+  background: linear-gradient(135deg, #1f8a5f, #146f4d);
+}
+
+.tableViewport {
+  overflow: auto;
+  max-height: min(72vh, calc(100vh - 240px));
+  border-radius: 26px;
+  border: 1px solid rgba(16, 79, 104, 0.12);
+  background: linear-gradient(180deg, rgba(248, 252, 253, 0.96), rgba(238, 247, 251, 0.92));
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-x pan-y;
+}
+
+.tableContainer {
+  min-width: max-content;
+}
+
+.dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  white-space: nowrap;
+}
+
+.thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.th {
+  position: sticky;
+  top: 0;
+  padding: 0.9rem 0.8rem;
+  border-bottom: 1px solid rgba(16, 79, 104, 0.12);
+  background: linear-gradient(180deg, #113a57, #0d506b);
+  color: #f5fbfd;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.thContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.thLabel {
+  overflow-wrap: anywhere;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.iconButton {
+  flex: 0 0 auto;
+  color: inherit !important;
+}
+
+.rowActionHead {
+  min-width: 72px;
+  text-align: center;
+}
+
+.rowActionCell {
+  width: 72px;
+  text-align: center;
+}
+
+.tr:nth-child(even) .td {
+  background: rgba(245, 251, 253, 0.92);
+}
+
+.tr:nth-child(odd) .td {
+  background: rgba(255, 255, 255, 0.98);
+}
+
+.tr:hover .td {
+  background: rgba(229, 242, 247, 0.96);
+}
+
+.td {
+  padding: 0.55rem;
+  border-bottom: 1px solid rgba(16, 79, 104, 0.08);
+  border-right: 1px solid rgba(16, 79, 104, 0.06);
+  vertical-align: middle;
+}
+
+.rowDeleteButton {
+  color: #b13636 !important;
+}
+
+.textField :global(.MuiOutlinedInput-root) {
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.textField :global(.MuiOutlinedInput-notchedOutline) {
+  border-color: rgba(16, 79, 104, 0.14);
+}
+
+.textField :global(.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
+  border-color: rgba(16, 111, 142, 0.3);
+}
+
+.textField :global(.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline) {
+  border-color: #0f7da0;
+  border-width: 2px;
+}
+
+.textField :global(.MuiInputBase-input) {
+  padding: 0.72rem 0.8rem;
+  color: #10273d;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: left;
+  background: transparent;
+}
+
+@media (max-width: 900px) {
+  .toolbar {
+    top: 88px;
+    align-items: stretch;
+  }
+
+  .tableViewport {
+    max-height: min(68vh, calc(100vh - 220px));
+  }
+
+  .toolbarGroup,
+  .toolbarMeta {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .sheetShell {
+    padding: 0.75rem;
+  }
+
+  .toolbar {
+    padding: 0.85rem;
+  }
+
+  .tableViewport {
+    max-height: min(66vh, calc(100vh - 180px));
+  }
+
+  .actionButton {
+    width: 100%;
+  }
+
+  .toolbarGroup {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

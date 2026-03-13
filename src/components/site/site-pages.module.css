@@ -1,0 +1,358 @@
+.homeHero {
+  position: relative;
+  overflow: hidden;
+  min-height: clamp(440px, 72vh, 660px);
+  display: grid;
+  align-items: end;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-radius: 34px;
+  border: 1px solid rgba(172, 210, 223, 0.26);
+  box-shadow:
+    0 32px 70px rgba(5, 20, 33, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.homeCarousel {
+  position: absolute;
+  inset: 0;
+  background: #071f34;
+}
+
+.homeSlide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: homeFadeCarousel 30s ease-in-out infinite;
+}
+
+.homeSlideImage {
+  object-fit: cover;
+  transform: scale(1.02);
+}
+
+.homeCarouselShade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(3, 19, 32, 0.84) 0%, rgba(3, 19, 32, 0.54) 42%, rgba(3, 19, 32, 0.22) 76%, rgba(3, 19, 32, 0.34) 100%),
+    linear-gradient(180deg, rgba(3, 19, 32, 0.18) 0%, rgba(3, 19, 32, 0.14) 45%, rgba(3, 19, 32, 0.6) 100%);
+}
+
+.homeHeroContent {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1.05rem;
+  max-width: min(680px, 100%);
+}
+
+.homeEyebrow {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(246, 251, 253, 0.94);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.homeTitle {
+  margin: 0;
+  color: #fbfdff;
+  font-family: var(--font-display);
+  font-size: clamp(2.7rem, 6vw, 5.4rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  text-shadow: 0 10px 30px rgba(4, 16, 28, 0.42);
+}
+
+.homeDescription {
+  margin: 0;
+  color: rgba(239, 247, 250, 0.92);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  text-shadow: 0 6px 20px rgba(4, 16, 28, 0.3);
+}
+
+.homeActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.homeStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.85rem;
+  max-width: 720px;
+  margin-top: 0.35rem;
+}
+
+.homeStatCard {
+  padding: 0.95rem 1rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(223, 241, 247, 0.16);
+  backdrop-filter: blur(12px);
+}
+
+.homeStatLabel {
+  margin: 0;
+  color: rgba(229, 243, 248, 0.78);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.homeStatValue {
+  margin: 0.45rem 0 0;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.homeMosaic {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 0.9rem;
+}
+
+.imageStack {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.imageFrame {
+  position: relative;
+  overflow: hidden;
+  min-height: 160px;
+  border-radius: 24px;
+  border: 1px solid rgba(211, 232, 239, 0.18);
+  background: rgba(7, 29, 45, 0.42);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.imageFrame img {
+  object-fit: cover;
+}
+
+.imageLarge {
+  min-height: 340px;
+}
+
+.splitGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.prose {
+  display: grid;
+  gap: 1rem;
+}
+
+.prose p,
+.prose li {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.85;
+}
+
+.prose ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.articleGrid,
+.portraitGrid,
+.contactGrid,
+.mediaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.portraitCard {
+  display: grid;
+  gap: 1rem;
+}
+
+.portraitImageWrap {
+  position: relative;
+  overflow: hidden;
+  min-height: 280px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(13, 59, 84, 0.1), rgba(10, 48, 69, 0.2));
+}
+
+.portraitImageWrap img {
+  object-fit: cover;
+}
+
+.portraitRole {
+  margin: 0;
+  color: #0e6784;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.portraitName {
+  margin: 0.35rem 0 0;
+  color: var(--ink-strong);
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.portraitBio {
+  margin: 0.55rem 0 0;
+  color: var(--ink-soft);
+  line-height: 1.75;
+}
+
+.mapFrame {
+  position: relative;
+  overflow: hidden;
+  min-height: 420px;
+  border-radius: 28px;
+  border: 1px solid rgba(14, 72, 97, 0.1);
+}
+
+.mapFrame img {
+  object-fit: cover;
+}
+
+.mediaCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.mediaPreview {
+  overflow: hidden;
+  border-radius: 22px;
+  background: #06253e;
+}
+
+.mediaPreview video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.mediaMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.68rem;
+  border-radius: 999px;
+  background: rgba(9, 78, 102, 0.08);
+  color: #0e607c;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.mediaDescription {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.plainButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: fit-content;
+  color: #0f6d8c;
+  font-weight: 800;
+}
+
+.contactInfo {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.contactLabel {
+  margin: 0;
+  color: #0e6784;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.contactValue {
+  margin: 0;
+  color: var(--ink-strong);
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.contactNote {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+@keyframes homeFadeCarousel {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  18% {
+    opacity: 1;
+    transform: scale(1.015);
+  }
+
+  24% {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+}
+
+@media (max-width: 960px) {
+  .homeHero {
+    min-height: 500px;
+    align-items: end;
+  }
+
+  .homeMosaic,
+  .splitGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .homeHero {
+    min-height: 540px;
+    padding: 1.25rem;
+  }
+
+  .homeCarouselShade {
+    background:
+      linear-gradient(180deg, rgba(3, 19, 32, 0.26) 0%, rgba(3, 19, 32, 0.42) 30%, rgba(3, 19, 32, 0.78) 100%);
+  }
+
+  .homeActions {
+    flex-direction: column;
+  }
+}
