@@ -118,7 +118,14 @@ export function BackLink({ href, children = 'Back' }) {
   );
 }
 
-export function LinkCard({ href, title, description, meta, external = false }) {
+export function LinkCard({
+  href,
+  title,
+  description,
+  meta,
+  external = false,
+  showMeta = true,
+}) {
   const usePlainAnchor =
     external || String(href).startsWith('http') || String(href).startsWith('mailto:');
 
@@ -130,7 +137,7 @@ export function LinkCard({ href, title, description, meta, external = false }) {
           {description ? <p className={styles.linkMeta}>{description}</p> : null}
         </div>
       </div>
-      {meta?.length ? (
+      {showMeta && meta?.length ? (
         <div className={styles.meta}>
           {meta.map((item) => (
             <span key={item} className={styles.pill}>

@@ -60,6 +60,7 @@
 
 .toggle {
   display: none;
+  min-height: 44px;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background: rgba(255, 255, 255, 0.05);
   color: #fff;
@@ -95,6 +96,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+  min-height: 44px;
   padding: 0.72rem 0.92rem;
   border-radius: 999px;
   color: rgba(244, 250, 252, 0.86);
@@ -146,6 +148,7 @@
 .dropdownItemLink {
   display: block;
   width: 100%;
+  min-height: 44px;
   padding: 0.72rem 0.85rem;
   border-radius: 14px;
   color: rgba(243, 249, 252, 0.88);
@@ -167,6 +170,14 @@
   margin-left: -2px;
 }
 
+@supports not (backdrop-filter: blur(18px)) {
+  .navbar,
+  .dropdownList,
+  .menu {
+    background: rgba(4, 24, 38, 0.95);
+  }
+}
+
 @media (max-width: 1200px) {
   .brandName {
     max-width: 220px;
@@ -175,11 +186,15 @@
 
 @media (max-width: 992px) {
   .navbar {
-    top: 10px;
+    top: calc(10px + var(--safe-top));
+    left: calc(12px + var(--safe-left));
+    right: calc(12px + var(--safe-right));
+    width: auto;
+    transform: none;
     align-items: center;
     height: auto;
-    min-height: 78px;
-    padding: 0.85rem 1rem;
+    min-height: 74px;
+    padding: 0.75rem 0.9rem;
     border-radius: 30px;
   }
 
@@ -191,12 +206,18 @@
     position: absolute;
     top: calc(100% + 10px);
     left: 0;
-    width: 100%;
+    right: 0;
+    width: auto;
     display: none;
     flex-direction: column;
     align-items: stretch;
     gap: 0.9rem;
-    padding: 1rem;
+    max-height: calc(100dvh - var(--safe-top) - 112px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.95rem;
+    padding-bottom: calc(0.95rem + var(--safe-bottom));
     border-radius: 26px;
     background: rgba(4, 24, 38, 0.95);
     box-shadow: 0 20px 32px rgba(4, 15, 24, 0.32);
@@ -239,6 +260,19 @@
 }
 
 @media (max-width: 720px) {
+  .navbar {
+    border-radius: 26px;
+  }
+
+  .logo {
+    width: 48px;
+    height: 48px;
+  }
+
+  .toggle {
+    padding: 0.55rem 0.85rem;
+  }
+
   .brandEyebrow {
     display: none;
   }

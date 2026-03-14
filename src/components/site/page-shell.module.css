@@ -65,6 +65,7 @@
   font-size: clamp(2.4rem, 6vw, 4.9rem);
   line-height: 0.94;
   letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
 }
 
 .description {
@@ -171,6 +172,7 @@
   font-size: clamp(1.8rem, 3vw, 2.6rem);
   line-height: 1;
   letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
 }
 
 .sectionDescription {
@@ -275,7 +277,7 @@
 
 .viewerFrame {
   overflow: hidden;
-  min-height: clamp(480px, 72vh, 920px);
+  min-height: clamp(360px, 68dvh, 920px);
   padding: 0.85rem;
   border-radius: 28px;
   border: 1px solid rgba(10, 55, 80, 0.12);
@@ -285,7 +287,7 @@
 
 .viewerFrame iframe {
   width: 100%;
-  min-height: clamp(460px, 68vh, 880px);
+  min-height: clamp(340px, 64dvh, 880px);
   border: 0;
   border-radius: 20px;
   background: #edf6fb;
@@ -308,12 +310,15 @@
 .mediaFrame iframe {
   display: block;
   width: 100%;
+  min-height: 220px;
   aspect-ratio: 16 / 9;
   border: 0;
 }
 
 .tableWrap {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 }
 
 .dataTable {
@@ -368,18 +373,31 @@
 @media (max-width: 960px) {
   .heroGrid {
     grid-template-columns: 1fr;
+    gap: 1.4rem;
   }
 
   .heroAside {
-    order: -1;
+    order: 0;
   }
 }
 
 @media (max-width: 720px) {
+  .page {
+    gap: 1.5rem;
+  }
+
   .hero,
   .panel,
   .viewerFrame {
     border-radius: 24px;
+  }
+
+  .hero {
+    padding: 1.25rem;
+  }
+
+  .statGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .actions {
@@ -392,7 +410,27 @@
     width: 100%;
   }
 
+  .viewerFrame {
+    min-height: min(62dvh, 580px);
+    padding: 0.7rem;
+  }
+
+  .viewerFrame iframe {
+    min-height: min(58dvh, 540px);
+    border-radius: 16px;
+  }
+
+  .mediaFrame {
+    border-radius: 18px;
+  }
+
   .dataTable {
-    min-width: 620px;
+    min-width: 560px;
+  }
+}
+
+@media (max-width: 480px) {
+  .statGrid {
+    grid-template-columns: 1fr;
   }
 }

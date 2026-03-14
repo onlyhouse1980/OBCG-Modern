@@ -1,35 +1,45 @@
-.iframe {
-    width:"100%";
-    max-height:"525px";
-}
-
-@media only screen and (min-width: 992px) {
-    .iframe {
-        width: 100%;
-        height: 87vh;
-    }
-}
-
-.iframPDF {
-    width:"100%";
-    max-height:"525px";
-}
-
-@media only screen and (min-width: 992px) {
-    .iframPDF {
-        width: 100%;
-        height: 87vh;
-    }
-}
-
+.iframe,
+.iframPDF,
 .iframPDFBL {
-    width:"100%";
-    max-height:"500px";
+  display: block;
+  width: 100%;
+  height: min(72dvh, 820px);
+  min-height: min(72dvh, 820px);
+  border: 0;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 20px 44px rgba(8, 27, 43, 0.1);
 }
 
-@media only screen and (min-width: 992px) {
-    .iframPDFBL {
-        width: 100%;
-        height: 83vh;
-    }
+@media (min-width: 992px) {
+  .iframe,
+  .iframPDF {
+    height: 87dvh;
+    min-height: 87dvh;
+  }
+
+  .iframPDFBL {
+    height: 83dvh;
+    min-height: 83dvh;
+  }
+}
+
+@media (max-width: 991px) {
+  .iframe,
+  .iframPDF,
+  .iframPDFBL {
+    height: min(70dvh, 720px);
+    min-height: min(70dvh, 720px);
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .iframe,
+  .iframPDF,
+  .iframPDFBL {
+    height: min(64dvh, 620px);
+    min-height: min(64dvh, 620px);
+    border-radius: 18px;
+  }
 }

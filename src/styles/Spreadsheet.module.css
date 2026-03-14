@@ -43,7 +43,7 @@
 
 .toolbar {
   position: sticky;
-  top: 96px;
+  top: calc(96px + var(--safe-top));
   z-index: 5;
   display: flex;
   flex-wrap: wrap;
@@ -124,14 +124,15 @@
 
 .tableViewport {
   overflow: auto;
-  max-height: min(72vh, calc(100vh - 240px));
+  max-height: min(72dvh, calc(100dvh - 240px - var(--safe-top) - var(--safe-bottom)));
   border-radius: 26px;
   border: 1px solid rgba(16, 79, 104, 0.12);
   background: linear-gradient(180deg, rgba(248, 252, 253, 0.96), rgba(238, 247, 251, 0.92));
   cursor: grab;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  touch-action: pan-x pan-y;
+  touch-action: pan-x pan-y pinch-zoom;
+  scrollbar-gutter: stable both-edges;
 }
 
 .tableContainer {
@@ -242,7 +243,7 @@
 .textField :global(.MuiInputBase-input) {
   padding: 0.72rem 0.8rem;
   color: #10273d;
-  font-size: 0.95rem;
+  font-size: max(16px, 0.95rem);
   font-weight: 600;
   text-align: left;
   background: transparent;
@@ -250,12 +251,12 @@
 
 @media (max-width: 900px) {
   .toolbar {
-    top: 88px;
+    top: calc(88px + var(--safe-top));
     align-items: stretch;
   }
 
   .tableViewport {
-    max-height: min(68vh, calc(100vh - 220px));
+    max-height: min(68dvh, calc(100dvh - 220px - var(--safe-top) - var(--safe-bottom)));
   }
 
   .toolbarGroup,
@@ -267,14 +268,16 @@
 @media (max-width: 640px) {
   .sheetShell {
     padding: 0.75rem;
+    border-radius: 24px;
   }
 
   .toolbar {
     padding: 0.85rem;
+    border-radius: 20px;
   }
 
   .tableViewport {
-    max-height: min(66vh, calc(100vh - 180px));
+    max-height: min(66dvh, calc(100dvh - 180px - var(--safe-top) - var(--safe-bottom)));
   }
 
   .actionButton {

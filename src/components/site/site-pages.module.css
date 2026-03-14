@@ -1,7 +1,7 @@
 .homeHero {
   position: relative;
   overflow: hidden;
-  min-height: clamp(440px, 72vh, 660px);
+  min-height: clamp(420px, 72dvh, 660px);
   display: grid;
   align-items: end;
   padding: clamp(1.5rem, 4vw, 3rem);
@@ -66,11 +66,13 @@
   font-size: clamp(2.7rem, 6vw, 5.4rem);
   line-height: 0.92;
   letter-spacing: -0.045em;
+  overflow-wrap: anywhere;
   text-shadow: 0 10px 30px rgba(4, 16, 28, 0.42);
 }
 
 .homeDescription {
   margin: 0;
+  max-width: 52ch;
   color: rgba(239, 247, 250, 0.92);
   font-size: 1.05rem;
   line-height: 1.8;
@@ -85,7 +87,7 @@
 
 .homeStats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 0.85rem;
   max-width: 720px;
   margin-top: 0.35rem;
@@ -220,7 +222,7 @@
 .mapFrame {
   position: relative;
   overflow: hidden;
-  min-height: 420px;
+  min-height: 360px;
   border-radius: 28px;
   border: 1px solid rgba(14, 72, 97, 0.1);
 }
@@ -331,8 +333,9 @@
 
 @media (max-width: 960px) {
   .homeHero {
-    min-height: 500px;
+    min-height: min(72dvh, 560px);
     align-items: end;
+    padding: 1.4rem;
   }
 
   .homeMosaic,
@@ -343,8 +346,9 @@
 
 @media (max-width: 720px) {
   .homeHero {
-    min-height: 540px;
-    padding: 1.25rem;
+    min-height: min(76dvh, 560px);
+    padding: 1rem;
+    border-radius: 28px;
   }
 
   .homeCarouselShade {
@@ -354,5 +358,49 @@
 
   .homeActions {
     flex-direction: column;
+  }
+
+  .homeActions > * {
+    width: 100%;
+  }
+
+  .homeDescription {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .homeStats {
+    grid-template-columns: 1fr;
+  }
+
+  .imageFrame {
+    min-height: 140px;
+    border-radius: 18px;
+  }
+
+  .imageLarge {
+    min-height: 240px;
+  }
+
+  .articleGrid,
+  .portraitGrid,
+  .contactGrid,
+  .mediaGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .portraitImageWrap {
+    min-height: 220px;
+  }
+
+  .mapFrame {
+    min-height: 280px;
+    border-radius: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .homeTitle {
+    font-size: clamp(2.2rem, 12vw, 3.4rem);
   }
 }

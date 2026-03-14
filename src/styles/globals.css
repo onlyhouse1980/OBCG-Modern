@@ -2,6 +2,11 @@
   --font-sans: 'Manrope', sans-serif;
   --font-display: 'Cormorant Garamond', serif;
   --page-width: 1200px;
+  --content-gutter: clamp(16px, 3vw, 24px);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
   --surface: rgba(255, 255, 255, 0.78);
   --surface-strong: rgba(255, 255, 255, 0.9);
   --ink-strong: #10273d;
@@ -20,6 +25,8 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 html,
@@ -37,6 +44,9 @@ body {
     linear-gradient(180deg, #eef7fb 0%, #dceef7 48%, #e9f3f8 100%);
   font-family: var(--font-sans);
   line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body::before {
@@ -61,6 +71,15 @@ img {
   max-width: 100%;
 }
 
+img,
+video,
+iframe,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
 button,
 input,
 select,
@@ -68,20 +87,68 @@ textarea {
   font: inherit;
 }
 
+input,
+select,
+textarea {
+  font-size: max(16px, 1rem);
+}
+
+button,
+a,
+[role='button'] {
+  touch-action: manipulation;
+}
+
 .app-shell {
   position: relative;
   z-index: 1;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
+  flex-direction: column;
+  overflow-x: clip;
+}
+
+.app-watermark {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: calc(96px + var(--safe-top)) calc(32px + var(--safe-right))
+    calc(32px + var(--safe-bottom)) calc(32px + var(--safe-left));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app-watermark-image {
+  width: min(64vw, 780px);
+  height: auto;
+  opacity: 0.12;
+  filter:
+    saturate(0.92)
+    contrast(0.92)
+    drop-shadow(0 18px 48px rgba(10, 51, 72, 0.08));
+}
+
+.app-frame {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1;
+  min-height: 100%;
   flex-direction: column;
 }
 
 .app-content {
   flex: 1;
   width: 100%;
-  max-width: calc(var(--page-width) + 48px);
+  max-width: calc(var(--page-width) + (var(--content-gutter) * 2));
   margin: 0 auto;
-  padding: 108px 24px 72px;
+  padding-top: calc(108px + var(--safe-top));
+  padding-right: calc(var(--content-gutter) + var(--safe-right));
+  padding-bottom: calc(72px + var(--safe-bottom));
+  padding-left: calc(var(--content-gutter) + var(--safe-left));
+  overflow-x: clip;
 }
 
 .app-content > * {
@@ -130,7 +197,7 @@ textarea {
 .app-content > .container > video {
   display: block;
   width: 100%;
-  min-height: clamp(520px, 72vh, 900px);
+  min-height: clamp(360px, 68dvh, 900px);
   padding: 0.8rem;
   border-radius: 28px;
   border: 1px solid rgba(17, 72, 95, 0.1);
@@ -158,6 +225,7 @@ textarea {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
 }
 
@@ -199,17 +267,62 @@ textarea {
 }
 
 @media screen and (max-width: 992px) {
+  .app-watermark {
+    padding-top: calc(90px + var(--safe-top));
+  }
+
+  .app-watermark-image {
+    width: min(78vw, 640px);
+    opacity: 0.11;
+  }
+
   .app-content {
-    padding: 96px 16px 72px;
+    padding-top: calc(96px + var(--safe-top));
+    padding-bottom: calc(56px + var(--safe-bottom));
   }
 
   .app-content > .container > iframe,
   .app-content > .container > video {
-    min-height: clamp(420px, 60vh, 720px);
+    min-height: clamp(320px, 62dvh, 720px);
     border-radius: 24px;
   }
 
   a.nav-link {
     padding-top: 30px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .app-watermark {
+    padding-right: calc(20px + var(--safe-right));
+    padding-bottom: calc(20px + var(--safe-bottom));
+    padding-left: calc(20px + var(--safe-left));
+  }
+
+  .app-watermark-image {
+    width: min(88vw, 460px);
+    opacity: 0.1;
+  }
+
+  .app-content {
+    padding-top: calc(90px + var(--safe-top));
+    padding-bottom: calc(40px + var(--safe-bottom));
+  }
+
+  .app-content > .container > iframe,
+  .app-content > .container > video {
+    min-height: min(60dvh, 520px);
+    padding: 0.6rem;
+    border-radius: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .app-content > * {
+    animation: none;
   }
 }

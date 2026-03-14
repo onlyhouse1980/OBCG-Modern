@@ -28,6 +28,13 @@ export const metadata = {
     'Community water usage, billing, and organizational resources for the Orchard Beach Community Group.',
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#071c2d',
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${manrope.variable} ${cormorant.variable}`}>

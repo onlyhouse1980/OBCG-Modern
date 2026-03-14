@@ -29,6 +29,9 @@ function MediaPreviewCard({ item }) {
           preload="metadata"
           onMouseEnter={handlePreviewStart}
           onMouseLeave={handlePreviewStop}
+          onTouchStart={handlePreviewStart}
+          onTouchEnd={handlePreviewStop}
+          onTouchCancel={handlePreviewStop}
           onFocus={handlePreviewStart}
           onBlur={handlePreviewStop}
         >

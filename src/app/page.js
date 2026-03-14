@@ -35,10 +35,7 @@ const homeCarouselImages = [
 
 export default function HomePage() {
   const homeRecordLinks = [
-    ...miscDocuments.slice(0, 4).map((document) => ({
-      ...document,
-      meta: ['Reference file'],
-    })),
+    ...miscDocuments.slice(0, 4),
     {
       href: '/contact',
       title: 'Contact the board',
@@ -70,8 +67,7 @@ export default function HomePage() {
         </div>
 
         <div className={styles.homeHeroContent}>
-          <span className={styles.homeEyebrow}>Orchard Beach Community Group</span>
-          <h1 className={styles.homeTitle}>Water usage, reports, and member resources</h1>
+          <h1 className={styles.homeTitle}>Orchard Beach Community Group</h1>
           <p className={styles.homeDescription}>
             Check meter usage, review billing information, open consumer
             confidence reports, and browse meeting minutes and community
@@ -128,7 +124,8 @@ export default function HomePage() {
               href={document.href}
               title={document.title}
               description={document.description}
-              meta={document.meta}
+              meta={null}
+              showMeta={false}
             />
           ))}
         </CardGrid>
