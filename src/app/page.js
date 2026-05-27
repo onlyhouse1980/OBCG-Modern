@@ -16,12 +16,24 @@ const homeCarouselImages = [
     alt: 'Waterfront view across Pickering Passage',
   },
   {
+    src: '/Images/WebPFiles/glass_droplets1.webp',
+    alt: 'Water droplets close-up',
+  },
+  {
     src: '/Images/WebPFiles/sunrise.webp',
     alt: 'Sunrise over Orchard Beach',
   },
   {
+    src: '/Images/WebPFiles/glass_droplets2.webp',
+    alt: 'Water droplets close-up',
+  },
+  {
     src: '/Images/WebPFiles/boat.webp',
     alt: 'Boat on the water near Orchard Beach',
+  },
+  {
+    src: '/Images/WebPFiles/glass_droplets3.webp',
+    alt: 'Water droplets close-up',
   },
   {
     src: '/Images/WebPFiles/hero-bg.webp',
@@ -52,7 +64,7 @@ export default function HomePage() {
             <div
               key={image.src}
               className={styles.homeSlide}
-              style={{ animationDelay: `${index * 6}s` }}
+              style={{ animationDelay: `${index * 18 - 45}s` }}
             >
               <Image
                 src={image.src}

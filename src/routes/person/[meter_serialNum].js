@@ -11,19 +11,57 @@ const OVERAGE_RATE = 0.025;
 const GAUGE_RADIUS = 80;
 const GAUGE_CIRCUMFERENCE = 2 * Math.PI * GAUGE_RADIUS;
 const GAUGE_HALF_CIRCUMFERENCE = GAUGE_CIRCUMFERENCE / 2;
+const GAUGE_CENTER = 100;
+const GAUGE_TICK_COUNT = 12;
 
 const bgColors = {
   Default: "#81b71a",
   Blue: "#00B1E1",
   Cyan: "#37BC9B",
   Green: "#8CC152",
+  Orange: "#F7931E",
   Red: "#E9573F",
   Yellow: "#F6BB42",
 };
 
+function formatGaugeTickLabel(value) {
+  if (value === 0) {
+    return '0';
+  }
+
+  return `${value / 1000}k`;
+}
+
+function getGaugeTicks(limit) {
+  return Array.from({ length: GAUGE_TICK_COUNT + 1 }, (_, index) => {
+    const value = (limit / GAUGE_TICK_COUNT) * index;
+    const ratio = value / limit;
+    const angle = 180 + ratio * 180;
+    const radians = (angle * Math.PI) / 180;
+    const isMajor = index % 2 === 0;
+    const innerRadius = isMajor ? GAUGE_RADIUS - 13 : GAUGE_RADIUS - 8;
+    const labelRadius = GAUGE_RADIUS - 26;
+
+    return {
+      value,
+      isMajor,
+      label: isMajor ? formatGaugeTickLabel(value) : '',
+      x1: GAUGE_CENTER + innerRadius * Math.cos(radians),
+      y1: GAUGE_CENTER + innerRadius * Math.sin(radians),
+      x2: GAUGE_CENTER + GAUGE_RADIUS * Math.cos(radians),
+      y2: GAUGE_CENTER + GAUGE_RADIUS * Math.sin(radians),
+      labelX: GAUGE_CENTER + labelRadius * Math.cos(radians),
+      labelY: GAUGE_CENTER + labelRadius * Math.sin(radians),
+    };
+  });
+}
+
 function UsageSpeedometer({ usedGallons }) {
   const gradientId = useId().replace(/:/g, '');
+  const gaugeTicks = getGaugeTicks(MONTHLY_LIMIT);
   const usageRatio = usedGallons / MONTHLY_LIMIT;
+  const estimatedUsagePercent = usageRatio * 100;
+  const roundedUsagePercent = Math.round(estimatedUsagePercent);
   const normalizedRatio = Math.min(Math.max(usageRatio, 0), 1);
   const gaugeStroke = GAUGE_HALF_CIRCUMFERENCE * normalizedRatio;
   const needleAngle = 180 + normalizedRatio * 180;
@@ -44,8 +82,11 @@ function UsageSpeedometer({ usedGallons }) {
   }
 
   const remainingGallons = Math.max(MONTHLY_LIMIT - usedGallons, 0);
-  const overageGallons = Math.max(usedGallons - MONTHLY_LIMIT, 0);
-  const currentOverageCharge = overageGallons * OVERAGE_RATE;
+  const isOverEstimatedLimit = estimatedUsagePercent > 100;
+  const overageGallons = isOverEstimatedLimit
+    ? usedGallons - MONTHLY_LIMIT
+    : 0;
+  const estimatedCurrentOverageCharge = overageGallons * OVERAGE_RATE;
 
   return (
     <div className={styles.resultPanel} aria-live="polite">
@@ -58,18 +99,18 @@ function UsageSpeedometer({ usedGallons }) {
           {statusLabel}
         </p>
         <p className={styles.resultMeta}>
-          {overageGallons > 0
+          {isOverEstimatedLimit
             ? `${overageGallons.toLocaleString()} gallons over the ${MONTHLY_LIMIT.toLocaleString()} gallon monthly limit.`
             : `${remainingGallons.toLocaleString()} gallons remaining before the ${MONTHLY_LIMIT.toLocaleString()} gallon monthly limit.`}
         </p>
-        {overageGallons > 0 && (
+        {isOverEstimatedLimit && (
           <div className={styles.chargeCard}>
-            <p className={styles.chargeLabel}>Current Overage Charge</p>
+            <p className={styles.chargeLabel}>Estimated Current Overage Charge</p>
             <p className={styles.chargeValue}>
-              ${currentOverageCharge.toFixed(2)}
+              ${estimatedCurrentOverageCharge.toFixed(2)}
             </p>
             <p className={styles.chargeMeta}>
-              {overageGallons.toLocaleString()} gallons at ${OVERAGE_RATE.toFixed(3)} per gallon.
+              Estimated from {overageGallons.toLocaleString()} gallons at ${OVERAGE_RATE.toFixed(3)} per gallon.
             </p>
           </div>
         )}
@@ -80,7 +121,7 @@ function UsageSpeedometer({ usedGallons }) {
           className={styles.gauge}
           viewBox="0 0 200 130"
           role="img"
-          aria-label={`Usage speedometer showing ${Math.round(usageRatio * 100)} percent of the monthly limit`}
+          aria-label={`Usage speedometer showing ${roundedUsagePercent} percent of the monthly limit`}
         >
           <defs>
             <linearGradient
@@ -92,7 +133,9 @@ function UsageSpeedometer({ usedGallons }) {
               y2="100"
             >
               <stop offset="0%" stopColor={bgColors.Blue} />
-              <stop offset="60%" stopColor={bgColors.Yellow} />
+              <stop offset="35%" stopColor={bgColors.Green} />
+              <stop offset="65%" stopColor={bgColors.Yellow} />
+              <stop offset="82%" stopColor={bgColors.Orange} />
               <stop offset="100%" stopColor={bgColors.Red} />
             </linearGradient>
           </defs>
@@ -113,6 +156,20 @@ function UsageSpeedometer({ usedGallons }) {
             strokeDasharray={`${gaugeStroke} ${GAUGE_HALF_CIRCUMFERENCE}`}
             strokeLinecap="round"
           />
+          <g aria-hidden="true">
+            {gaugeTicks.map((tick) => (
+              <line
+                key={`tick-${tick.value}`}
+                className={`${styles.gaugeTick} ${
+                  tick.isMajor ? styles.gaugeTickMajor : styles.gaugeTickMinor
+                }`}
+                x1={tick.x1}
+                y1={tick.y1}
+                x2={tick.x2}
+                y2={tick.y2}
+              />
+            ))}
+          </g>
           <line
             className={styles.gaugeNeedle}
             x1="100"
@@ -121,12 +178,23 @@ function UsageSpeedometer({ usedGallons }) {
             y2={needleY}
           />
           <circle className={styles.gaugeCenter} cx="100" cy="100" r="6" />
-          <text className={styles.gaugeLabel} x="12" y="118">0</text>
-          <text className={styles.gaugeLabel} x="89" y="18">3k</text>
-          <text className={styles.gaugeLabel} x="160" y="118">6k</text>
+          <g aria-hidden="true">
+            {gaugeTicks
+              .filter((tick) => tick.label)
+              .map((tick) => (
+                <text
+                  key={`label-${tick.value}`}
+                  className={styles.gaugeLabel}
+                  x={tick.labelX}
+                  y={tick.labelY}
+                >
+                  {tick.label}
+                </text>
+              ))}
+          </g>
         </svg>
         <p className={styles.gaugePercent}>
-          {Math.round(usageRatio * 100)}%
+          {roundedUsagePercent}%
         </p>
       </div>
     </div>

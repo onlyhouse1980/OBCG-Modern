@@ -22,7 +22,8 @@
   position: absolute;
   inset: 0;
   opacity: 0;
-  animation: homeFadeCarousel 30s ease-in-out infinite;
+  animation: homeFadeCarousel 90s linear infinite both;
+  will-change: opacity, transform;
 }
 
 .homeSlideImage {
@@ -220,15 +221,41 @@
 }
 
 .mapFrame {
-  position: relative;
-  overflow: hidden;
-  min-height: 360px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem;
   border-radius: 28px;
   border: 1px solid rgba(14, 72, 97, 0.1);
+  background: transparent;
 }
 
-.mapFrame img {
-  object-fit: cover;
+.mapImage {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: min(85vh, 1100px);
+  object-fit: contain;
+  border-radius: 18px;
+}
+
+@media (min-width: 961px) {
+  .mapFrame {
+    padding: 2px;
+    min-height: min(95vh, 480px);
+    min-width: min(98vw, 680px);
+    overflow: hidden;
+  }
+
+  .mapImage {
+    transform: rotate(45deg);
+    transform-origin: center center;
+    max-width: min(67vh, 680px);
+    max-height: min(85vh, 860px);
+    border-radius: 14px;
+  }
 }
 
 .mediaCard {
@@ -311,23 +338,33 @@
 
 @keyframes homeFadeCarousel {
   0% {
-    opacity: 1;
+    opacity: 0;
     transform: scale(1);
   }
 
-  18% {
-    opacity: 1;
-    transform: scale(1.015);
+  10% {
+    opacity: 0;
+    transform: scale(1.01);
   }
 
-  24% {
+  30% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  70% {
     opacity: 0;
-    transform: scale(1.04);
+    transform: scale(1.07);
   }
 
   100% {
     opacity: 0;
-    transform: scale(1.06);
+    transform: scale(1.09);
   }
 }
 
@@ -394,8 +431,12 @@
   }
 
   .mapFrame {
-    min-height: 280px;
+    padding: 0.5rem;
     border-radius: 22px;
+  }
+
+  .mapImage {
+    max-height: min(78vh, 800px);
   }
 }
 

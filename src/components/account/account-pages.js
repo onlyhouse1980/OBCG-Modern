@@ -27,6 +27,7 @@ import {
 import {
   buildAnnualBudgetSummary,
   buildUsagePeriods,
+  calculateFlatCharge,
   formatCurrency,
   formatNumber,
   getLatestReading,
@@ -34,6 +35,10 @@ import {
 } from '../../lib/meter-utils';
 
 import styles from './account-pages.module.css';
+
+const GAUGE_RADIUS = 80;
+const GAUGE_CENTER = 100;
+const GAUGE_TICK_COUNT = 12;
 
 function useRemoteData(url) {
   const [state, setState] = useState({
@@ -148,6 +153,38 @@ function formatChartLabelMMDDYYYY(label) {
   return `${month}/${day}/${year}`;
 }
 
+function formatGaugeTickLabel(value) {
+  if (value === 0) {
+    return '0';
+  }
+
+  return `${value / 1000}k`;
+}
+
+function getGaugeTicks(limit) {
+  return Array.from({ length: GAUGE_TICK_COUNT + 1 }, (_, index) => {
+    const value = (limit / GAUGE_TICK_COUNT) * index;
+    const ratio = value / limit;
+    const angle = 180 + ratio * 180;
+    const radians = (angle * Math.PI) / 180;
+    const isMajor = index % 2 === 0;
+    const innerRadius = isMajor ? GAUGE_RADIUS - 13 : GAUGE_RADIUS - 8;
+    const labelRadius = GAUGE_RADIUS - 26;
+
+    return {
+      value,
+      isMajor,
+      label: isMajor ? formatGaugeTickLabel(value) : '',
+      x1: GAUGE_CENTER + innerRadius * Math.cos(radians),
+      y1: GAUGE_CENTER + innerRadius * Math.sin(radians),
+      x2: GAUGE_CENTER + GAUGE_RADIUS * Math.cos(radians),
+      y2: GAUGE_CENTER + GAUGE_RADIUS * Math.sin(radians),
+      labelX: GAUGE_CENTER + labelRadius * Math.cos(radians),
+      labelY: GAUGE_CENTER + labelRadius * Math.sin(radians),
+    };
+  });
+}
+
 function InfoTable({ title, description, columns, rows }) {
   return (
     <article className={styles.tableCard}>
@@ -237,15 +274,21 @@ function AuthLayout({
 
 function UsageGauge({ usage, limit = 6000 }) {
   const gradientId = useId().replace(/:/g, '');
+  const gaugeTicks = getGaugeTicks(limit);
+  const estimatedUsagePercent = (usage / limit) * 100;
+  const roundedUsagePercent = Math.round(estimatedUsagePercent);
+  const isOverEstimatedLimit = estimatedUsagePercent > 100;
+  const overageGallons = isOverEstimatedLimit ? usage - limit : 0;
+  const estimatedCurrentOverageCharge = calculateFlatCharge(usage, limit);
   const ratio = Math.min(Math.max(usage / limit, 0), 1.35);
   const safeRatio = Math.min(ratio, 1);
-  const circumference = Math.PI * 80;
+  const circumference = Math.PI * GAUGE_RADIUS;
   const dash = circumference * safeRatio;
   const angle = 180 + Math.min(ratio, 1) * 180;
   const radians = (angle * Math.PI) / 180;
   const needleLength = 58;
-  const needleX = 100 + needleLength * Math.cos(radians);
-  const needleY = 100 + needleLength * Math.sin(radians);
+  const needleX = GAUGE_CENTER + needleLength * Math.cos(radians);
+  const needleY = GAUGE_CENTER + needleLength * Math.sin(radians);
 
   const status =
     usage > limit
@@ -260,12 +303,21 @@ function UsageGauge({ usage, limit = 6000 }) {
         className={styles.gauge}
         viewBox="0 0 200 130"
         role="img"
-        aria-label={`Usage gauge showing ${Math.round((usage / limit) * 100)} percent of the target limit`}
+        aria-label={`Usage gauge showing ${roundedUsagePercent} percent of the target limit`}
       >
         <defs>
-          <linearGradient id={gradientId} x1="20" y1="100" x2="180" y2="100">
+          <linearGradient
+            id={gradientId}
+            gradientUnits="userSpaceOnUse"
+            x1="20"
+            y1="100"
+            x2="180"
+            y2="100"
+          >
             <stop offset="0%" stopColor="#47a7d1" />
+            <stop offset="35%" stopColor="#6fbf73" />
             <stop offset="65%" stopColor="#f4bf68" />
+            <stop offset="82%" stopColor="#f28c38" />
             <stop offset="100%" stopColor="#dc7461" />
           </linearGradient>
         </defs>
@@ -285,26 +337,56 @@ function UsageGauge({ usage, limit = 6000 }) {
           strokeLinecap="round"
           strokeDasharray={`${dash} ${circumference}`}
         />
+        <g aria-hidden="true">
+          {gaugeTicks.map((tick) => (
+            <line
+              key={`tick-${tick.value}`}
+              className={`${styles.gaugeTick} ${
+                tick.isMajor ? styles.gaugeTickMajor : styles.gaugeTickMinor
+              }`}
+              x1={tick.x1}
+              y1={tick.y1}
+              x2={tick.x2}
+              y2={tick.y2}
+            />
+          ))}
+        </g>
         <line
           className={styles.gaugeNeedle}
-          x1="100"
-          y1="100"
+          x1={GAUGE_CENTER}
+          y1={GAUGE_CENTER}
           x2={needleX}
           y2={needleY}
         />
-        <circle className={styles.gaugeCenter} cx="100" cy="100" r="6" />
-        <text className={styles.gaugeLabel} x="14" y="118">
-          0
-        </text>
-        <text className={styles.gaugeLabel} x="92" y="18">
-          3k
-        </text>
-        <text className={styles.gaugeLabel} x="160" y="118">
-          6k
-        </text>
+        <circle className={styles.gaugeCenter} cx={GAUGE_CENTER} cy={GAUGE_CENTER} r="6" />
+        <g aria-hidden="true">
+          {gaugeTicks
+            .filter((tick) => tick.label)
+            .map((tick) => (
+              <text
+                key={`label-${tick.value}`}
+                className={styles.gaugeLabel}
+                x={tick.labelX}
+                y={tick.labelY}
+              >
+                {tick.label}
+              </text>
+            ))}
+        </g>
       </svg>
-      <p className={styles.gaugePercent}>{Math.round((usage / limit) * 100)}%</p>
+      <p className={styles.gaugePercent}>{roundedUsagePercent}%</p>
       <p className={styles.gaugeStatus}>{status}</p>
+      {isOverEstimatedLimit ? (
+        <div className={styles.gaugeCharge}>
+          <p className={styles.gaugeChargeLabel}>Estimated current overage charge</p>
+          <p className={styles.gaugeChargeValue}>
+            {formatCurrency(estimatedCurrentOverageCharge)}
+          </p>
+          <p className={styles.gaugeChargeMeta}>
+            Based on {formatNumber(overageGallons)} gallons over the current limit.
+          </p>
+        </div>
+      ) : null}
     </div>
   );
 }

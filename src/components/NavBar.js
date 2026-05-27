@@ -84,6 +84,51 @@ const NAV_ITEMS = [
 
 const isFileLink = (href) => href.endsWith('.pdf');
 
+const ChevronIcon = ({ className }) => (
+  <svg
+    className={className}
+    width="10"
+    height="10"
+    viewBox="0 0 10 10"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M1.5 3.5 5 7l3.5-3.5"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const MenuIcon = ({ open }) => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    aria-hidden="true"
+  >
+    {open ? (
+      <path
+        d="M5 5l10 10M15 5L5 15"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    ) : (
+      <path
+        d="M3 6h14M3 10h14M3 14h14"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    )}
+  </svg>
+);
+
 const NavBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -110,13 +155,13 @@ const NavBar = () => {
       target={item.file ? "_blank" : undefined}
       rel={item.file ? "noreferrer" : undefined}
     >
-      {item.label}
+      <span className={styles.linkLabel}>{item.label}</span>
     </Link>
   );
 
   return (
-    <nav className={styles.navbar}>
-      <Link href="/" className={styles.brand} onClick={closeMenus}>
+    <nav className={styles.navbar} aria-label="Primary">
+      <Link href="/" className={styles.brand} onClick={closeMenus} aria-label="Orchard Beach Community Group — Home">
         <Image
           src="/Images/WebPFiles/obcglogo.webp"
           alt="Orchard Beach Community Group logo"
@@ -133,8 +178,10 @@ const NavBar = () => {
         onClick={toggleMobileMenu}
         aria-expanded={mobileOpen}
         aria-controls="primary-navigation"
+        aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
       >
-        {mobileOpen ? 'Close' : 'Menu'}
+        <MenuIcon open={mobileOpen} />
+        <span className={styles.toggleLabel}>{mobileOpen ? 'Close' : 'Menu'}</span>
       </button>
 
       <div
@@ -151,26 +198,26 @@ const NavBar = () => {
               );
             }
 
+            const isOpen = openDropdown === item.key;
             return (
               <li
                 key={item.key}
-                className={`${styles.menuItem} ${
-                  openDropdown === item.key ? styles.dropdownOpen : ""
-                }`}
+                className={`${styles.menuItem} ${isOpen ? styles.dropdownOpen : ""}`}
               >
                 <div className={styles.dropdown}>
                   <button
                     type="button"
                     className={styles.dropdownTrigger}
                     onClick={() => toggleDropdown(item.key)}
-                    aria-expanded={openDropdown === item.key}
+                    aria-expanded={isOpen}
+                    aria-haspopup="true"
                   >
-                    <span>{item.label}</span>
-                    <span className={styles.ddf}>◿</span>
+                    <span className={styles.linkLabel}>{item.label}</span>
+                    <ChevronIcon className={styles.chevron} />
                   </button>
-                  <ul className={styles.dropdownList}>
+                  <ul className={styles.dropdownList} role="menu">
                     {item.items.map((child) => (
-                      <li key={`${item.key}-${child.label}`} className={styles.dropdownItem}>
+                      <li key={`${item.key}-${child.label}`} className={styles.dropdownItem} role="none">
                         {renderLink(child, styles.dropdownItemLink)}
                       </li>
                     ))}

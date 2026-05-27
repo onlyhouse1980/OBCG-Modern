@@ -66,7 +66,10 @@ export default function ContactPage() {
           <Image
             src="/Images/WebPFiles/fullsmall.webp"
             alt="Schematic map of Orchard Beach"
-            fill
+            width={2400}
+            height={3000}
+            sizes="(max-width: 960px) 92vw, min(80vh, 1100px)"
+            className={styles.mapImage}
             priority
           />
         </div>
