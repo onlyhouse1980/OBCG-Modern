@@ -243,7 +243,7 @@
 
 @media (min-width: 961px) {
   .mapFrame {
-    padding: 2px;
+    padding: 10px;
     min-height: min(95vh, 480px);
     min-width: min(98vw, 680px);
     overflow: hidden;
