@@ -1,4 +1,4 @@
-# nuked-fixxxy
+# OBCG - Orchard Beach Community Group - Customer Portal
  
 
 Orchard Beach Community Group website with public documents, member water-usage tools, and private billing/admin features. The obcg.org platform combines a public community information site with authenticated customer tools for water-meter lookup, billing visibility, and spreadsheet-style meter-reading administration.
