@@ -5,154 +5,154 @@
             "bsonType": "objectId"
         },
         "apr01_19": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "apr01_24": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "apr05_20": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "apr05_21": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "apr06_23": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "apr07_22": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "aug01_24": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "aug02_23": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "aug04_21": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "aug05_22": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "aug06_19": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "aug10_20": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "dec01_24": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "dec03_19": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "dec03_21": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "dec04_18": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "dec04_23": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "dec04_24": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "dec09_22": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "dec10_20": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "feb01_19": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "feb02_24": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "feb04_22": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "feb04_23": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "feb19_21": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "fees": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "jan01_19": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "jan03_20": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "jun01_24": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "jun04_19": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "jun04_21": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "jun05_23": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "jun07_22": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "jun10_20": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "jun30_19": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "last_name": {
             "bsonType": "string"
         },
         "mar03_19": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "may06_19": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
-        "meter_serialNum": {
+        "meter_serialint": {
             "bsonType": "string"
         },
         "nov01_24": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "nov02_18": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "oct01_24": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "oct02_18": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "oct03_21": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "oct05_23": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "oct07_20": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "oct07_22": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "oct11_19": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "sep01_24": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "sep02_19": {
-            "bsonType": "string"
+            "bsonType": "int"
         },
         "updatedAt": {
             "bsonType": "date"
