@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 
 import { dbConnect } from '@/lib/dbConnect';
 import WaterReading from '@/models/WaterReading';
-import { spreadsheetFallback } from '@/data/fallbackReadings';
 
 export async function GET(request) {
   const searchParams = request.nextUrl.searchParams;
@@ -26,12 +25,6 @@ export async function GET(request) {
     console.log('Dashboard API: Searching for last_name with regex:', searchRegex);
 
     if (!connection) {
-      const fallbackMatches = spreadsheetFallback.filter((entry) =>
-        searchRegex.test(entry.last_name),
-      );
-      console.warn(
-        'Database unavailable; serving dashboard data from fallback dataset.',
-      );
       return NextResponse.json(
         { success: true, data: fallbackMatches },
         { status: 200 },

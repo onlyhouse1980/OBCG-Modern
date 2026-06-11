@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
 
 import { getMongoClient } from '@/lib/mongodb';
-import { spreadsheetFallback } from '@/data/fallbackReadings';
 
 export async function GET() {
-  let data = spreadsheetFallback;
+
 
   try {
     const client = await getMongoClient();

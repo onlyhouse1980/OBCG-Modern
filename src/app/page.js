@@ -70,8 +70,10 @@ export default function HomePage() {
                 src={image.src}
                 alt={image.alt}
                 fill
-                priority={index < 2}
-                fetchPriority={index < 2 ? "high" : "low"}
+                priority={index < 3}
+                fetchPriority={index < 3 ? "high" : "low"}
+                sizes="(max-width: 720px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                quality={70}
                 className={styles.homeSlideImage}
               />
             </div>

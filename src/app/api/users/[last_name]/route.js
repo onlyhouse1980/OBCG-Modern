@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 
 import { getMongoClient } from '@/lib/mongodb';
-import { spreadsheetFallback } from '@/data/fallbackReadings';
 
 export async function GET(_request, context) {
   const { last_name } = await context.params;
@@ -13,11 +12,6 @@ export async function GET(_request, context) {
     if (client) {
       const db = client.db('meter');
       user = await db.collection('readings').findOne({ last_name });
-    } else {
-      user = spreadsheetFallback.find((entry) => entry.last_name === last_name);
-      console.warn(
-        `MongoDB unavailable; using fallback data for last name ${last_name}`,
-      );
     }
 
     if (user) {
